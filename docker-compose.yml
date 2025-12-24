@@ -1,11 +1,9 @@
-version: "3.9"
-
 services:
   backend:
     build: ./backend
     container_name: natu-backend
     ports:
-      - "3000:3000"
+      - "5000:5000"
     volumes:
       - ./backend:/app
 

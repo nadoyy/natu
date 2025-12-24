@@ -20,7 +20,7 @@ export default function Login() {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("role", data.user.role);
                 alert(`Logged in as ${data.user.role}`);
-                navigate("/");
+                navigate("/dashboard");
             } else {
                 setError(data.error);
             }
