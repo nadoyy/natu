@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use("/api/auth", authRoutes);
 
-app.get("/api/dasboard", auth, (req, res) => {
+app.get("/api/dashboard", auth, (req, res) => {
   res.json(req.user);
 });
 

@@ -5,27 +5,49 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [pin, setPin] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
+
+        // Validasi input
+        if (!username.trim() || !pin.trim()) {
+            setError("Username dan PIN wajib diisi");
+            return;
+        }
+
+        setLoading(true);
+
         try {
-            const res = await fetch("http://localhost:5000/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, pin }),
-            });
+            const res = await fetch(
+                "https://natu-backend-production.up.railway.app/api/auth/login",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, pin }),
+                }
+            );
+
             const data = await res.json();
-            if (res.ok) {
+
+            if (!res.ok) {
+                // Menampilkan error dari backend
+                setError(data.error || "Login gagal");
+            } else {
+                // Simpan token dan role
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("role", data.user.role);
+
                 alert(`Logged in as ${data.user.role}`);
                 navigate("/dashboard");
-            } else {
-                setError(data.error);
             }
         } catch (err) {
-            setError(err.message);
+            setError("Tidak dapat menghubungi server");
+            console.error(err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -44,7 +66,7 @@ export default function Login() {
                         required
                     />
                     <input
-                        type="text"
+                        type="password"
                         placeholder="PIN"
                         value={pin}
                         onChange={(e) => setPin(e.target.value)}
@@ -53,9 +75,10 @@ export default function Login() {
                     />
                     <button
                         type="submit"
-                        className="bg-green-600 text-white py-2 rounded hover:bg-green-700 transition mt-2"
+                        disabled={loading}
+                        className="bg-green-600 text-white py-2 rounded hover:bg-green-700 transition mt-2 disabled:opacity-50"
                     >
-                        Login
+                        {loading ? "Logging in..." : "Login"}
                     </button>
                 </form>
             </div>
