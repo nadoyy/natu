@@ -10,7 +10,7 @@ export default function Map() {
     if (!position) return <div>Loading location...</div>;
 
     return (
-        <MapContainer center={position} zoom={15} className="h-screen w-screen" zoomControl={false} attributionControl={false}>
+        <MapContainer center={position} zoom={15} className="min-h-screen w-screen" zoomControl={false} attributionControl={false}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             <Marker position={position} icon={customIcon}>
                 <Popup>Lokasi saya</Popup>

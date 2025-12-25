@@ -36,7 +36,7 @@ export default function Emergency() {
     if (user.role !== "korban") return <div>403 Forbidden</div>;
 
     return (
-        <div>
+        <div className="min-h-screen w-screen">
             <Map />
         </div>
     );
