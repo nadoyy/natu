@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../components/auth/AuthContext";
+import { useAuth } from "../auth/AuthContext";
 
 export default function useAuthFetch(url, options = {}) {
     const [data, setData] = useState(null);

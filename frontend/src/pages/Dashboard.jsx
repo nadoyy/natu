@@ -1,4 +1,4 @@
-import useAuthFetch from "../hooks/useAuthFetch";
+import useAuthFetch from "../auth/useAuthFetch";
 
 export default function Dashboard() {
     const { data: user, status, errorMessage } = useAuthFetch(
